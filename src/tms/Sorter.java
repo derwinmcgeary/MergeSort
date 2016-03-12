@@ -55,26 +55,11 @@ public class Sorter extends Thread {
         
         int midPoint = input.length / 2;
         int[] output;
-        try {
         
-            Sorter left = new Sorter(Arrays.copyOfRange(input, 0, midPoint));
-            Sorter right = new Sorter(Arrays.copyOfRange(input, midPoint, input.length));
+        Sorter left = new Sorter(Arrays.copyOfRange(input, 0, midPoint));
+        Sorter right = new Sorter(Arrays.copyOfRange(input, midPoint, input.length));
+        output = merge(left.getSorted(),right.getSorted());
         
-            left.start();
-            right.start();
-            try {
-                left.join();
-                right.join();
-            } catch (InterruptedException e) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
-            }
-            output = merge(left.output,right.output);
-            
-        } catch (OutOfMemoryError e) { // If we're out of memory, stop adding threads
-            Sorter left = new Sorter(Arrays.copyOfRange(input, 0, midPoint));
-            Sorter right = new Sorter(Arrays.copyOfRange(input, midPoint, input.length));
-            output = merge(left.getSorted(),right.getSorted());
-        }
 
         
         return output;

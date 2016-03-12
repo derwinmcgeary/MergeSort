@@ -19,11 +19,22 @@ public class Main {
      */
     public static void main(String[] args) {
         
+        Sorter[] sorters = new Sorter[4];
+        
         for (int i = 1; i < 25; i++) {
             long startTime = System.currentTimeMillis();
-            Sorter s = new Sorter(i*1000);
-            s.getSorted();
-            System.out.println("Array size " + i*1000 + " Took: " + (System.currentTimeMillis() - startTime) + " ms");
+            for (int j=0;j<4; j++) {
+            sorters[j] = new Sorter(i*250000);
+            sorters[j].start();
+            }
+            
+            for (int j=0;j<4; j++) {
+                try {
+                    sorters[j].join();
+                } catch (InterruptedException e) {}
+            }
+            
+            System.out.println("Array size " + i*1000000 + " Took: " + (System.currentTimeMillis() - startTime) + " ms");
         }
     }
     
