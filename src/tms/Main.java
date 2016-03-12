@@ -19,20 +19,12 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        int[] testArray = {2,4,6,8};
-        int[] testArray2 = {1,4,7,10};
-        Sorter s = new Sorter(20000);
-        s.start();
-        System.out.println("Started Thread ...");
-        try {
-            s.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        for (int i = 1; i < 25; i++) {
+            long startTime = System.currentTimeMillis();
+            Sorter s = new Sorter(i*1000);
+            s.getSorted();
+            System.out.println("Array size " + i*1000 + " Took: " + (System.currentTimeMillis() - startTime) + " ms");
         }
-        
-        System.out.println("Done!");
-        printOut(s.output);
-         
     }
     
     public static void printOut(int[] input){

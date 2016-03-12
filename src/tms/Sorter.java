@@ -43,7 +43,8 @@ public class Sorter extends Thread {
     }
     
     public int[] getSorted() {
-        return mergeSort(items);
+        this.output = mergeSort(items);
+        return output;
     }
     
     private int[] mergeSort(int[] input) {
@@ -54,20 +55,27 @@ public class Sorter extends Thread {
         
         int midPoint = input.length / 2;
         int[] output;
-        
-        Sorter left = new Sorter(Arrays.copyOfRange(input, 0, midPoint));
-        Sorter right = new Sorter(Arrays.copyOfRange(input, midPoint, input.length));
-        
-        left.start();
-        right.start();
-        
         try {
-            left.join();
-            right.join();
-        } catch (InterruptedException e) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        
+            Sorter left = new Sorter(Arrays.copyOfRange(input, 0, midPoint));
+            Sorter right = new Sorter(Arrays.copyOfRange(input, midPoint, input.length));
+        
+            left.start();
+            right.start();
+            try {
+                left.join();
+                right.join();
+            } catch (InterruptedException e) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+            }
+            output = merge(left.output,right.output);
+            
+        } catch (OutOfMemoryError e) { // If we're out of memory, stop adding threads
+            Sorter left = new Sorter(Arrays.copyOfRange(input, 0, midPoint));
+            Sorter right = new Sorter(Arrays.copyOfRange(input, midPoint, input.length));
+            output = merge(left.getSorted(),right.getSorted());
         }
-        output = merge(left.output,right.output);
+
         
         return output;
     }
