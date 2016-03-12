@@ -5,6 +5,9 @@
  */
 package tms;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author derwin
@@ -18,9 +21,17 @@ public class Main {
         
         int[] testArray = {2,4,6,8};
         int[] testArray2 = {1,4,7,10};
-        Sorter s = new Sorter(1000);
-        printOut(s.getItems());
-        printOut(s.getSorted());
+        Sorter s = new Sorter(20000);
+        s.start();
+        System.out.println("Started Thread ...");
+        try {
+            s.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println("Done!");
+        printOut(s.output);
          
     }
     

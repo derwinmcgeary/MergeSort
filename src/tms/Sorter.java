@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author derwin
  */
-public class Sorter {
+public class Sorter extends Thread {
     private int[] items;
     public int[] output;
     
@@ -58,7 +58,16 @@ public class Sorter {
         Sorter left = new Sorter(Arrays.copyOfRange(input, 0, midPoint));
         Sorter right = new Sorter(Arrays.copyOfRange(input, midPoint, input.length));
         
-        output = merge(left.getSorted(),right.getSorted());
+        left.start();
+        right.start();
+        
+        try {
+            left.join();
+            right.join();
+        } catch (InterruptedException e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+        output = merge(left.output,right.output);
         
         return output;
     }
@@ -73,30 +82,33 @@ public class Sorter {
         int[] output = new int[total];
         
         for(current = 0; current < 2 * minSize; current++) {
-            System.out.println("Sorting left[" + leftCount + "] =" + left[leftCount] +
-                    " and right[" + rightCount + "] = " + right[rightCount]);
+                    
             if  ((left[leftCount] > right[rightCount])) {
-                    output[current] = right[rightCount++];
-                    System.out.println("output[" + current + "] = " + output[current]);
-                    if(rightCount == right.length) break;
+                        
+                        output[current] = right[rightCount++];
+                        if(rightCount == right.length) break;
+                    
+                    
             } else {    
-                    output[current] = left[leftCount++];
-                    System.out.println("output[" + current + "] = " + output[current]);
-                    if(leftCount == left.length) break;
-            }
+                        
+                        output[current] = left[leftCount++];
+                        if(leftCount == left.length) break;
+            
+                    }
         }
         
         while(leftCount<left.length) {
             output[++current] = left[leftCount++];
-            System.out.println("output[" + (current - 1) + "] = " + output[current-1]);
-
         }
         
         while(rightCount<right.length) {
             output[++current] = right[rightCount++];
-            System.out.println("output[" + (current -1) + "] = " + output[current-1]);
         }
         
         return output;
-    }    
+    }
+    
+    public void run() {
+        this.output = getSorted();
+    }
 }
