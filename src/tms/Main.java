@@ -15,13 +15,16 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+        long startTime = System.currentTimeMillis();
         
-        int[] testArray = {2,4,6,8};
-        int[] testArray2 = {1,4,7,10};
-        Sorter s = new Sorter(1000);
-        printOut(s.getItems());
-        printOut(s.getSorted());
-         
+        for(int i = 1; i < 20; i++) {
+            Sorter s = new Sorter(i*1000000);
+            s.getSorted();
+            System.out.println("Array size " + i*1000000 + 
+                    " Took : " + 
+                    (System.currentTimeMillis() - startTime) + " ms");
+        }
     }
     
     public static void printOut(int[] input){

@@ -73,28 +73,21 @@ public class Sorter {
         int[] output = new int[total];
         
         for(current = 0; current < 2 * minSize; current++) {
-            System.out.println("Sorting left[" + leftCount + "] =" + left[leftCount] +
-                    " and right[" + rightCount + "] = " + right[rightCount]);
             if  ((left[leftCount] > right[rightCount])) {
                     output[current] = right[rightCount++];
-                    System.out.println("output[" + current + "] = " + output[current]);
                     if(rightCount == right.length) break;
             } else {    
                     output[current] = left[leftCount++];
-                    System.out.println("output[" + current + "] = " + output[current]);
                     if(leftCount == left.length) break;
             }
         }
         
         while(leftCount<left.length) {
             output[++current] = left[leftCount++];
-            System.out.println("output[" + (current - 1) + "] = " + output[current-1]);
-
         }
         
         while(rightCount<right.length) {
             output[++current] = right[rightCount++];
-            System.out.println("output[" + (current -1) + "] = " + output[current-1]);
         }
         
         return output;
