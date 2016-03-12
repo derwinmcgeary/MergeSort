@@ -2,12 +2,12 @@
 
 This is a quick implementation of MergeSort which works with arrays of integers.
 There is a branch where it is implemented using threads, but I strongly
-suspect that it isn't actually working with maximal efficiency.  Any suggestions
-as to how to do it better are welcome!
+suspect that it isn't actually working with maximal efficiency. I have also made a branch which only uses 4 threads which maxes out my CPUs but for some reason isn't as fast as the recursive one.
 
 ## Sample output
 
-``` Array size 1000000 Took : 408 ms
+`
+Array size 1000000 Took : 408 ms
 Array size 2000000 Took : 1528 ms
 Array size 3000000 Took : 2912 ms
 Array size 4000000 Took : 4016 ms
@@ -26,4 +26,5 @@ Array size 16000000 Took : 37675 ms
 Array size 17000000 Took : 42482 ms
 Array size 18000000 Took : 47332 ms
 Array size 19000000 Took : 52705 ms
-```
+
+`
