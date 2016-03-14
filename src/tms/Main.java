@@ -19,9 +19,9 @@ public class Main {
         long startTime = System.currentTimeMillis();
         
         for(int i = 1; i < 20; i++) {
-            Sorter s = new Sorter(i*1000000);
+            Sorter s = new Sorter(i*10000);
             s.getSorted();
-            System.out.println("Array size " + i*1000000 + 
+            System.out.println("Array size " + i*10000 + 
                     " Took : " + 
                     (System.currentTimeMillis() - startTime) + " ms");
         }
